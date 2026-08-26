@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from remover import remover
 from discord.ext import commands
 
+os.makedirs("tmp", exist_ok=True)
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix='.', intents=intents)
 
@@ -26,9 +27,8 @@ async def bgr(ctx):
         return
     await attachment.save(f"tmp/raw.png")
 
-
-    file = open(f"tmp/removed.png", "rb")
     remover("tmp/raw.png")
+    file = open(f"tmp/removed.png", "rb")
     removed_img = discord.File(file)
     await ctx.send(file=removed_img)
     file.close()
